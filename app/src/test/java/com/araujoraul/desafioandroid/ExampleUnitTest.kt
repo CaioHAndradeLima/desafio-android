@@ -1,4 +1,4 @@
-package com.araujoraul.app
+package com.araujoraul.desafioandroid
 
 import org.junit.Test
 

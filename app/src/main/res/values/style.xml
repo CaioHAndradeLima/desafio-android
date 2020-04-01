@@ -2,11 +2,30 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- Title Toolbar text size -->
+    <style name="title" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <!--  Style username  -->
+    <style name="username" parent="Widget.MaterialComponents.TextView">
+        <item name="android:text">@string/username</item>
+        <item name="android:textColor">#4497d1</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAppearance">@android:style/TextAppearance.Small</item>
+    </style>
+
+    <!--  Style First and Last name  -->
+    <style name="FirstLastName" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textColor">#acaebf</item>
+        <item name="android:text">@string/first_last_name</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAppearance">@android:style/TextAppearance.Small</item>
+    </style>
 </resources>
