@@ -12,9 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-
-        <activity android:name="com.araujoraul.desafioandroid.presentation.ui.reposlist.ReposListActivity"
-            >
+        <activity android:name=".presentation.ui.SplashScreenActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,7 +21,19 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.araujoraul.desafioandroid.presentation.ui.repodetail.RepoDetailActivity" />
+
+        <activity android:name=".presentation.ui.reposlist.ReposListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+
+        <activity android:name=".presentation.ui.repodetail.RepoDetailActivity" />
+
 
     </application>
+
 </manifest>

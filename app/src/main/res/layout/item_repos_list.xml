@@ -49,7 +49,7 @@
                 app:layout_constraintTop_toBottomOf="@id/txtName"
                 tools:text="@string/desc_repo" />
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/avatar"
                 android:layout_width="48dp"
                 android:layout_height="48dp"

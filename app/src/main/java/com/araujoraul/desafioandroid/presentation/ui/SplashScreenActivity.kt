@@ -1,27 +1,24 @@
 package com.araujoraul.desafioandroid.presentation.ui
 
 import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.os.PersistableBundle
-import androidx.appcompat.app.AppCompatActivity
 import com.araujoraul.desafioandroid.R
 import com.araujoraul.desafioandroid.presentation.ui.reposlist.ReposListActivity
 
-class SplashScreen: AppCompatActivity() {
+class SplashScreenActivity : AppCompatActivity() {
 
-
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
 
-        Handler().postDelayed(Runnable{
+        Handler().postDelayed(Runnable {
             run {
                 startActivity(Intent(this, ReposListActivity::class.java))
                 finish()
             }
-        }, 3000)
-
+        }, 4000)
 
     }
 }
