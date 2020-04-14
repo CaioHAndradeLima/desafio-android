@@ -1,12 +1,10 @@
-package com.araujoraul.desafioandroid.data.network
+package com.araujoraul.desafioandroid.data.response
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiService {
     const val BASE_URL = "https://api.github.com/"
-
-
     private var INSTANCE: ReposServices? = null
 
     val instance: ReposServices?

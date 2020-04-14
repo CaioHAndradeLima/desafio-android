@@ -9,4 +9,6 @@ class Repository(
         @SerializedName("forks_count")val forksCount: Int = 0,
         @SerializedName("stargazers_count")val stargazersCount: Int = 0,
         @SerializedName("owner")val owner: Owner = Owner()
-)
+) {
+    constructor(id: Int, name: String, description: String, forksCount: Int, stargazersCount: Int, owner: String) : this()
+}

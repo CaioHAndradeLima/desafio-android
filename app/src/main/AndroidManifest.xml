@@ -11,14 +11,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.repodetail.RepoDetailActivity"></activity>
-        <activity android:name=".ui.reposlist.ReposListActivity">
+
+
+        <activity android:name="com.araujoraul.desafioandroid.presentation.ui.reposlist.ReposListActivity"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
 
+        <activity android:name="com.araujoraul.desafioandroid.presentation.ui.repodetail.RepoDetailActivity" />
+
+    </application>
 </manifest>

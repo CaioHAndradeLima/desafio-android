@@ -1,4 +1,4 @@
-package com.araujoraul.desafioandroid.data.network
+package com.araujoraul.desafioandroid.data.response
 
 import com.araujoraul.desafioandroid.data.model.PullRequests
 import com.araujoraul.desafioandroid.data.model.Repositories

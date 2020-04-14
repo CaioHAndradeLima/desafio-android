@@ -1,4 +1,4 @@
-package com.araujoraul.desafioandroid.ui.repodetail
+package com.araujoraul.desafioandroid.presentation.ui.repodetail
 
 import android.content.Context
 import android.content.Intent
@@ -26,6 +26,7 @@ class RepoDetailActivity : AppCompatActivity(), RepoDetailAdapter.ItemRepoDetail
     }
 
     fun init(){
+
     val creator = intent?.getStringExtra(CREATOR)?: ""
         val repository = intent?.getStringExtra(REPOSITORY)?: ""
 

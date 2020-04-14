@@ -1,6 +1,7 @@
 <resources>
+    <!--  RepoLisActivity/RepoDetailActivity  -->
     <string name="app_name">Github JavaPop</string>
-    <string name="title_repo">Nome Repositório</string>
+    <string name="name_repo">Nome Repositório</string>
     <string name="desc_repo">Descrição do repositório lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum</string>
     <string name="username">username</string>
     <string name="first_last_name">Nome Sobrenome</string>
