@@ -40,11 +40,11 @@ class ReposListAdapter : ListAdapter<Repository, ReposListAdapter.ReposListViewH
                 with(itemView){
                     txtName.text = repo.name
                     txtDescription.text = repo.description
-                    forks.text = repo.forksCount.toString()
-                    stars.text = repo.stargazersCount.toString()
-                    username.text = repo.owner.login
-
-                    avatar.loadImage(repo.owner.avatarUrl)
+                    forks.text = repo.forks.toString()
+                    stars.text = repo.stars.toString()
+//                    username.text = repo.owner.login
+//
+//                    avatar.loadImage(repo.owner.avatarUrl)
                 }
             }
         }
@@ -58,9 +58,9 @@ class ReposListAdapter : ListAdapter<Repository, ReposListAdapter.ReposListViewH
     companion object{
 
         private val REPO_COMPARATOR = object : DiffUtil.ItemCallback<Repository>() {
-            override fun areItemsTheSame(oldItem: Repository, newItem: Repository) = oldItem.id == newItem.id
+            override fun areItemsTheSame(oldItem: Repository, newItem: Repository) = oldItem.name == newItem.name
 
-            override fun areContentsTheSame(oldItem: Repository, newItem: Repository) = oldItem.id == newItem.id
+            override fun areContentsTheSame(oldItem: Repository, newItem: Repository) = oldItem == newItem
         }
     }
 

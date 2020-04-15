@@ -1,4 +1,4 @@
-package com.araujoraul.desafioandroid.data.response
+package com.araujoraul.desafioandroid.data.api
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

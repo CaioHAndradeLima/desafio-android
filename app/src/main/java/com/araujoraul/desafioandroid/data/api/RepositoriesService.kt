@@ -1,4 +1,4 @@
-package com.araujoraul.desafioandroid.data.response
+package com.araujoraul.desafioandroid.data.api
 
 import android.util.Log
 import com.araujoraul.desafioandroid.data.model.PullRequests
