@@ -1,7 +1,7 @@
 package com.araujoraul.desafioandroid.data.api
 
 import android.util.Log
-import com.araujoraul.desafioandroid.data.model.PullRequests
+import com.araujoraul.desafioandroid.data.model.PullRequest
 import com.araujoraul.desafioandroid.data.model.RepositoriesResponse
 import com.araujoraul.desafioandroid.data.model.Repository
 import retrofit2.Call
@@ -23,11 +23,11 @@ interface RepositoriesService {
             @Query("per_page") itemsPerPage: Int
     ): Call<RepositoriesResponse>
 
-    @GET("repos/{creator}/{repository}/pulls")
+    @GET("repos/{owner}/{repo}/pulls")
     fun searchPullRequests(
-            @Path("creator") creator: String,
-            @Path("repository") repository: String
-    ): Call<List<PullRequests>>
+            @Path("owner") owner: String,
+            @Path("repo") repo: String
+    ): Call<List<PullRequest>>
 
 }
 
@@ -48,7 +48,7 @@ fun searchJavaPopRepositories(
 
                 override fun onResponse(call: Call<RepositoriesResponse>, response: Response<RepositoriesResponse>) {
 
-                    Log.d(TAG, "RESPONSE: $response")
+                    Log.d(TAG, "RESPONSE REPOSITORIES: $response")
 
                     if (response.isSuccessful){
                         val repositories = response.body()?.items ?: emptyList()
@@ -60,6 +60,44 @@ fun searchJavaPopRepositories(
                 }
 
                 override fun onFailure(call: Call<RepositoriesResponse>, t: Throwable) {
+                    Log.d(TAG, "Fail to get data")
+                    onError(t.message ?: "Unknown error")
+                }
+
+            }
+    )
+
+}
+
+fun searchPullRequests(
+        service: RepositoriesService,
+        owner: String,
+        repo: String,
+        onSuccess: (pulls: List<PullRequest>) -> Unit,
+        onError: (error: String) -> Unit
+){
+    Log.d(TAG, "owner: $owner, repo: $repo")
+
+    service.searchPullRequests(owner, repo).enqueue(
+            object : Callback<List<PullRequest>>{
+
+                override fun onResponse(call: Call<List<PullRequest>>, response: Response<List<PullRequest>>) {
+
+                    Log.d(TAG, "RESPONSE PULLREQUEST: $response")
+
+                    if (response.isSuccessful){
+                        val pulls = response.body() ?: listOf()
+                        onSuccess(pulls)
+
+                    } else{
+                        onError(response.errorBody()?.string() ?: "Unknown error")
+                    }
+
+
+                    TODO("Verify if it's ok")
+                }
+
+                override fun onFailure(call: Call<List<PullRequest>>, t: Throwable) {
                     Log.d(TAG, "Fail to get data")
                     onError(t.message ?: "Unknown error")
                 }

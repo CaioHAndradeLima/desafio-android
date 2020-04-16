@@ -2,6 +2,7 @@ package com.araujoraul.desafioandroid.db
 
 import android.util.Log
 import androidx.lifecycle.LiveData
+import com.araujoraul.desafioandroid.data.model.PullRequest
 import com.araujoraul.desafioandroid.data.model.Repository
 import java.util.concurrent.Executor
 
@@ -16,7 +17,19 @@ class GithubLocalCache(
     fun insert(repos: List<Repository>, insertFinished: () -> Unit) {
         ioExecutor.execute {
             Log.d("GithubLocalCache", "inserting ${repos.size} repos")
-            repoDao.insert(repos)
+            repoDao.insertRepos(repos)
+            insertFinished()
+        }
+    }
+
+
+    /**
+     * Insert a list of pull requests in the database, on a background thread.
+     */
+    fun insertPull(pulls: List<PullRequest>, insertFinished: () -> Unit ){
+        ioExecutor.execute {
+            Log.d("GithubLocalCache", "inserting ${pulls.size} pulls")
+            repoDao.insertPulls(pulls)
             insertFinished()
         }
     }

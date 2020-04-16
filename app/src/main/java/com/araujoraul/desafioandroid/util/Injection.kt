@@ -1,12 +1,17 @@
 package com.araujoraul.desafioandroid.util
 
 import android.content.Context
+import android.widget.ImageView
 import androidx.lifecycle.ViewModelProvider
+import com.araujoraul.desafioandroid.R
 import com.araujoraul.desafioandroid.data.api.ApiService
 import com.araujoraul.desafioandroid.data.api.GithubRepository
 import com.araujoraul.desafioandroid.db.GithubLocalCache
 import com.araujoraul.desafioandroid.db.RepoDatabase
-import com.araujoraul.desafioandroid.presentation.ui.reposlist.ViewModelFactory
+import com.araujoraul.desafioandroid.presentation.ui.pullrequests.PullRequestsViewModel
+import com.araujoraul.desafioandroid.presentation.ui.reposlist.ReposListViewModel
+import com.bumptech.glide.Glide
+import de.hdodenhof.circleimageview.CircleImageView
 import java.util.concurrent.Executors
 
 /**
@@ -25,7 +30,7 @@ object Injection {
     }
 
     /**
-     * Creates an instance of [GithubRepository] based on the [GithubService] and a
+     * Creates an instance of [GithubRepository] based on the [ApiService] and a
      * [GithubLocalCache]
      */
     private fun provideGithubRepository(context: Context): GithubRepository {
@@ -36,9 +41,20 @@ object Injection {
      * Provides the [ViewModelProvider.Factory] that is then used to get a reference to
      * [ViewModel] objects.
      */
-    fun provideViewModelFactory(context: Context): ViewModelProvider.Factory {
-        return ViewModelFactory(provideGithubRepository(context))
+    fun provideReposViewModelFactory(context: Context): ViewModelProvider.Factory {
+        return ReposListViewModel.ViewModelFactory(provideGithubRepository(context))
     }
 
 
+    fun providePullsViewModelFactory(context: Context): ViewModelProvider.Factory{
+        return PullRequestsViewModel.ViewModelFactory(provideGithubRepository(context))
+    }
+
+}
+
+fun CircleImageView.loadImage(imageUrl: String?) {
+    Glide.with(this.context)
+            .load(imageUrl)
+            .placeholder(R.drawable.ic_account_circle_black_24dp)
+            .into(this)
 }

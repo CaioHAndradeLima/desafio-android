@@ -2,7 +2,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -13,24 +13,24 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <!-- Title Toolbar text size -->
-    <style name="title" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+    <!-- Toolbar Text Style -->
+    <style name="toolbarTextStyle" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">24sp</item>
+        <item name="titleTextColor">@android:color/white</item>
     </style>
 
-    <!--  Style username  -->
+    <!--  Style username text  -->
     <style name="username" parent="Widget.MaterialComponents.TextView">
-        <item name="android:text">@string/username</item>
         <item name="android:textColor">#4497d1</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textAppearance">@android:style/TextAppearance.Small</item>
+        <item name="android:textAppearance">?android:textAppearanceSmall</item>
     </style>
 
-    <!--  Style First and Last name  -->
-    <style name="FirstLastName" parent="Widget.MaterialComponents.TextView">
-        <item name="android:textColor">#acaebf</item>
-        <item name="android:text">@string/first_last_name</item>
+    <!--  Style date text -->
+    <style name="date" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textColor">@android:color/darker_gray</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textAppearance">@android:style/TextAppearance.Small</item>
+        <item name="android:textAppearance">?android:textAppearanceSmall</item>
     </style>
+
 </resources>

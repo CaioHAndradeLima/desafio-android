@@ -5,27 +5,19 @@ import androidx.lifecycle.MutableLiveData
 import com.araujoraul.desafioandroid.data.model.RepositoriesResult
 import com.araujoraul.desafioandroid.db.GithubLocalCache
 
-class GithubRepository (
-        private val service: RepositoriesService,
-        private val cache: GithubLocalCache
-) {
+class GithubRepository (private val service: RepositoriesService, private val cache: GithubLocalCache) {
 
-    // keep the last requested page. When the request is successful, increment the page number.
     private var lastRequestedPage = 1
-
-    // LiveData of network errors.
     private val networkErrors = MutableLiveData<String>()
-
-    // avoid triggering multiple requests in the same time
     private var isRequestInProgress = false
 
     /**
      * Search repositories whose names match the query.
      */
-    fun search(query: String): RepositoriesResult {
+    fun searchRepos(query: String): RepositoriesResult {
         Log.d("GithubRepository", "New query: $query")
         lastRequestedPage = 1
-        requestAndSaveData(query)
+        requestReposAndSaveData(query)
 
         // Get data from the local cache
         val data = cache.reposByName(query)
@@ -34,10 +26,10 @@ class GithubRepository (
     }
 
     fun requestMore(query: String) {
-        requestAndSaveData(query)
+        requestReposAndSaveData(query)
     }
 
-    private fun requestAndSaveData(query: String) {
+    private fun requestReposAndSaveData(query: String) {
         if (isRequestInProgress) return
 
         isRequestInProgress = true
@@ -51,6 +43,17 @@ class GithubRepository (
             isRequestInProgress = false
         })
     }
+
+     fun requestPullsAndSaveData(owner: String, repo: String){
+
+        searchPullRequests(service, owner, repo, { pulls ->
+            cache.insertPull(pulls){}
+        }, { error ->
+            networkErrors.postValue(error)
+        })
+    }
+
+
 
     companion object {
         private const val NETWORK_PAGE_SIZE = 50

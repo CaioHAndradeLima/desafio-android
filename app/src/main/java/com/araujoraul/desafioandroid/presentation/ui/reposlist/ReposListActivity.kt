@@ -2,7 +2,6 @@ package com.araujoraul.desafioandroid.presentation.ui.reposlist
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
@@ -16,13 +15,14 @@ import com.araujoraul.desafioandroid.R
 import com.araujoraul.desafioandroid.databinding.ActivityMainBinding
 import com.araujoraul.desafioandroid.util.Injection
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 
 class ReposListActivity : AppCompatActivity() {
 
     private val adapter = ReposListAdapter()
     private val viewModel by lazy {
-        ViewModelProviders.of(this, Injection.provideViewModelFactory(this))
+        ViewModelProviders.of(this, Injection.provideReposViewModelFactory(this))
                 .get(ReposListViewModel::class.java)
     }
 
@@ -34,15 +34,18 @@ class ReposListActivity : AppCompatActivity() {
         binding.viewmodel = viewModel
 
         setupScrollListener()
-        setupRecyclerAdapter()
+        setup()
         val query = savedInstanceState?.getString(LAST_SEARCH_QUERY) ?: DEFAULT_QUERY
         viewModel.searchRepo(query)
         initSearch(query)
     }
 
-    fun setupRecyclerAdapter() {
-        recyclerMain.adapter = adapter
+    fun setup() {
 
+        setSupportActionBar(toolbar)
+        supportActionBar?.title = getString(R.string.app_name)
+
+        recyclerMain.adapter = adapter
         viewModel.repos.observe(this, Observer {
             Log.d("Activity", "list: ${it?.size}")
             showEmptyList(it?.size == 0)
@@ -50,7 +53,7 @@ class ReposListActivity : AppCompatActivity() {
         })
 
         viewModel.networkErrors.observe(this, Observer<String> {
-            Toast.makeText(this, "\uD83D\uDE28 Error! $it", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "\uD83D\uDE28 No connection! $it", Toast.LENGTH_LONG).show()
         })
 
     }

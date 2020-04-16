@@ -1,9 +1,6 @@
 package com.araujoraul.desafioandroid.presentation.ui.reposlist
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.araujoraul.desafioandroid.data.api.GithubRepository
 import com.araujoraul.desafioandroid.data.model.RepositoriesResult
 import com.araujoraul.desafioandroid.data.model.Repository
@@ -16,7 +13,7 @@ class ReposListViewModel(private val repository: GithubRepository) : ViewModel()
 
     private val queryLiveData = MutableLiveData<String>()
     private val repoResult: LiveData<RepositoriesResult> = Transformations.map(queryLiveData) {
-        repository.search(it)
+        repository.searchRepos(it)
     }
 
     val repos: LiveData<List<Repository>> = Transformations.switchMap(repoResult) { it -> it.data }
@@ -44,4 +41,19 @@ class ReposListViewModel(private val repository: GithubRepository) : ViewModel()
      * Get the last query value.
      */
     fun lastQueryValue(): String? = queryLiveData.value
+
+
+    /**
+     * Factory for ViewModels
+     */
+    class ViewModelFactory(private val repository: GithubRepository) : ViewModelProvider.Factory {
+
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(ReposListViewModel::class.java)) {
+                @Suppress("UNCHECKED_CAST")
+                return ReposListViewModel(repository) as T
+            }
+            throw IllegalArgumentException("Unknown ViewModel class")
+        }
+    }
 }

@@ -31,7 +31,7 @@
         </activity>
 
 
-        <activity android:name=".presentation.ui.repodetail.RepoDetailActivity" />
+        <activity android:name=".presentation.ui.pullrequests.PullRequestActivity" />
 
 
     </application>

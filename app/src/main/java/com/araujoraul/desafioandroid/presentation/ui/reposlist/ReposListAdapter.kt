@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.araujoraul.desafioandroid.R
 import com.araujoraul.desafioandroid.data.model.Repository
 import com.bumptech.glide.Glide
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.item_repos_list.view.*
 
 class ReposListAdapter : ListAdapter<Repository, ReposListAdapter.ReposListViewHolder>(REPO_COMPARATOR) {
@@ -36,6 +37,8 @@ class ReposListAdapter : ListAdapter<Repository, ReposListAdapter.ReposListViewH
         private val description: TextView = itemView.findViewById(R.id.txtDescription)
         private val stars: TextView = itemView.findViewById(R.id.stars)
         private val forks: TextView = itemView.findViewById(R.id.forks)
+        private val _avatar: CircleImageView = itemView.findViewById(R.id.avatar)
+        private val _username: TextView = itemView.findViewById(R.id.username)
         private var repo: Repository? = null
 
         fun bind(repo: Repository?) {
@@ -44,8 +47,8 @@ class ReposListAdapter : ListAdapter<Repository, ReposListAdapter.ReposListViewH
                     description.text = repo.description
                     forks.text = repo.forks.toString()
                     stars.text = repo.stars.toString()
-//                    username.text = repo.owner.login
-//                    avatar.loadImage(repo.owner.avatarUrl)
+//                    _username.text = repo.owner.login
+//                    _avatar.loadImage(repo.owner.avatarUrl)
             }
 
             if (repo != null){
@@ -86,10 +89,4 @@ class ReposListAdapter : ListAdapter<Repository, ReposListAdapter.ReposListViewH
 
 }
 
-private fun ImageView.loadImage(imageUrl: String?) {
-    Glide.with(this.context)
-            .load(imageUrl)
-            .placeholder(R.mipmap.ic_launcher)
-            .into(this)
-}
 

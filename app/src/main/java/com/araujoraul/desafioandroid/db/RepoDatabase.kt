@@ -4,10 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.araujoraul.desafioandroid.data.model.PullRequest
 import com.araujoraul.desafioandroid.data.model.Repository
 
 @Database(
-        entities = [Repository::class],
+        entities = [Repository::class, PullRequest::class],
         version = 1,
         exportSchema = false
 )
