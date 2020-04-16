@@ -2,9 +2,11 @@ package com.araujoraul.desafioandroid.presentation.ui.pullrequests
 
 import androidx.lifecycle.*
 import com.araujoraul.desafioandroid.data.api.GithubRepository
+import com.araujoraul.desafioandroid.data.model.Owner
 
 class PullRequestsViewModel(private val repository: GithubRepository) : ViewModel(){
 
+    private val _owner = MutableLiveData<List<Owner>>()
 
 
 

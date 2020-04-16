@@ -11,7 +11,9 @@ import com.araujoraul.desafioandroid.util.loadImage
 import de.hdodenhof.circleimageview.CircleImageView
 
 
-class PullRequestAdapter(val pulls: List<PullRequest>) : RecyclerView.Adapter<PullRequestAdapter.PullRequestViewHolder>() {
+class PullRequestAdapter() : RecyclerView.Adapter<PullRequestAdapter.PullRequestViewHolder>() {
+
+    var pulls = listOf<PullRequest>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PullRequestViewHolder {
         return PullRequestViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_pull_request, parent, false))

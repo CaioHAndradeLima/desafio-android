@@ -9,16 +9,20 @@
             type="com.araujoraul.desafioandroid.presentation.ui.reposlist.ReposListViewModel" />
     </data>
 
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:foreground="?android:selectableItemBackground"
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingStart="16dp"
             android:paddingTop="16dp"
-            android:paddingEnd="16dp">
+            android:paddingEnd="16dp"
+            >
 
             <TextView
                 android:id="@+id/txtName"

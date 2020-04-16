@@ -1,5 +1,7 @@
 package com.araujoraul.desafioandroid.presentation.ui.pullrequests
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -16,7 +18,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 
 class PullRequestActivity : AppCompatActivity() {
 
-    private val adapter = PullRequestAdapter(emptyList())
+    private val adapter = PullRequestAdapter()
     private val viewModel by lazy {
         ViewModelProviders.of(this, Injection.providePullsViewModelFactory(this))
                 .get(PullRequestsViewModel::class.java)
@@ -24,6 +26,7 @@ class PullRequestActivity : AppCompatActivity() {
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         val binding: ActivityPullRequestBinding = DataBindingUtil.setContentView(this, R.layout.activity_pull_request)
 
         binding.lifecycleOwner = this
@@ -34,15 +37,20 @@ class PullRequestActivity : AppCompatActivity() {
     }
 
     fun setup() {
+        val repository = intent?.getStringExtra(REPOSITORY) ?: ""
+
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = "NOME DO REPOSITORIO"
-        TODO("Don't forget to called this name of repository in Title Toolbar")
+        supportActionBar?.title = repository
 
-        recyclerPull.layoutManager = LinearLayoutManager(this)
-        recyclerPull.hasFixedSize()
-        recyclerPull.adapter = adapter
+
+
+//        TODO("Don't forget to called this name of repository in Title Toolbar")
+//
+//        recyclerPull.layoutManager = LinearLayoutManager(this)
+//        recyclerPull.hasFixedSize()
+//        recyclerPull.adapter = adapter
 
 
 
@@ -62,6 +70,17 @@ class PullRequestActivity : AppCompatActivity() {
 //    override fun onClick(item: PullRequest) {
 //        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(item.htmlUrl)))
 //    }
+
+    companion object{
+
+        const val REPOSITORY = "REPOSITORY"
+
+        fun createIntent(context: Context, repository: String) =
+                Intent(context, PullRequestActivity::class.java).apply {
+                    putExtra(REPOSITORY, repository)
+                }
+
+    }
 
 
 }

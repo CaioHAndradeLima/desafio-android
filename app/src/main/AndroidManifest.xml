@@ -31,7 +31,8 @@
         </activity>
 
 
-        <activity android:name=".presentation.ui.pullrequests.PullRequestActivity" />
+        <activity android:name=".presentation.ui.pullrequests.PullRequestActivity"
+            android:parentActivityName=".presentation.ui.reposlist.ReposListActivity"/>
 
 
     </application>

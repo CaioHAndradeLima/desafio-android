@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -14,13 +15,12 @@ import com.bumptech.glide.Glide
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.item_repos_list.view.*
 
-class ReposListAdapter : ListAdapter<Repository, ReposListAdapter.ReposListViewHolder>(REPO_COMPARATOR) {
-
+class ReposListAdapter(val clickListener: RepoClickListener): ListAdapter<Repository, ReposListAdapter.ReposListViewHolder>(REPO_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReposListViewHolder {
 
         return ReposListViewHolder(LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_repos_list, parent, false))
+                .inflate(R.layout.item_repos_list, parent, false), clickListener)
     }
 
     override fun onBindViewHolder(holder: ReposListViewHolder, position: Int) {
@@ -32,7 +32,7 @@ class ReposListAdapter : ListAdapter<Repository, ReposListAdapter.ReposListViewH
         }
     }
 
-    class ReposListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ReposListViewHolder(itemView: View, val clickListener: RepoClickListener) : RecyclerView.ViewHolder(itemView) {
         private val name: TextView = itemView.findViewById(R.id.txtName)
         private val description: TextView = itemView.findViewById(R.id.txtDescription)
         private val stars: TextView = itemView.findViewById(R.id.stars)
@@ -47,8 +47,14 @@ class ReposListAdapter : ListAdapter<Repository, ReposListAdapter.ReposListViewH
                     description.text = repo.description
                     forks.text = repo.forks.toString()
                     stars.text = repo.stars.toString()
+
 //                    _username.text = repo.owner.login
 //                    _avatar.loadImage(repo.owner.avatarUrl)
+
+                itemView.setOnClickListener {
+                    clickListener.onClick(repo)
+                }
+
             }
 
             if (repo != null){
@@ -86,6 +92,7 @@ class ReposListAdapter : ListAdapter<Repository, ReposListAdapter.ReposListViewH
             override fun areContentsTheSame(oldItem: Repository, newItem: Repository) = oldItem == newItem
         }
     }
+
 
 }
 
