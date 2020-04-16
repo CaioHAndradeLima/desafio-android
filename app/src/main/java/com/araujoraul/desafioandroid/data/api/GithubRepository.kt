@@ -2,6 +2,7 @@ package com.araujoraul.desafioandroid.data.api
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.araujoraul.desafioandroid.data.model.PullRequestsResult
 import com.araujoraul.desafioandroid.data.model.RepositoriesResult
 import com.araujoraul.desafioandroid.db.GithubLocalCache
 
@@ -44,13 +45,15 @@ class GithubRepository (private val service: RepositoriesService, private val ca
         })
     }
 
-     fun requestPullsAndSaveData(owner: String, repo: String){
 
+     fun requestPullsAndSaveData(owner: String, repo: String){
+            TODO("??????????")
         searchPullRequests(service, owner, repo, { pulls ->
             cache.insertPull(pulls){}
         }, { error ->
             networkErrors.postValue(error)
         })
+
     }
 
 

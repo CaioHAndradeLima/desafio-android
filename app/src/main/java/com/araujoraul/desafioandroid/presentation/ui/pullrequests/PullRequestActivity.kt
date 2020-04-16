@@ -52,6 +52,7 @@ class PullRequestActivity : AppCompatActivity(), PullClickListener {
         viewModel.pullRequests.observe(this, Observer {
             Log.d("ActivityPull", "list: ${it?.size}")
             showEmptyList(it?.size == 0)
+            adapter.pulls.addAll(it)
            adapter.notifyDataSetChanged()
         })
 

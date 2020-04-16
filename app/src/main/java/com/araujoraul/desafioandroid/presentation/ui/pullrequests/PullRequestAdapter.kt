@@ -14,7 +14,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 
 class PullRequestAdapter(val clickListener: PullClickListener) : RecyclerView.Adapter<PullRequestAdapter.PullRequestViewHolder>() {
 
-    var pulls = listOf<PullRequest>()
+    var pulls = ArrayList<PullRequest>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PullRequestViewHolder {
         return PullRequestViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_pull_request, parent, false), clickListener)

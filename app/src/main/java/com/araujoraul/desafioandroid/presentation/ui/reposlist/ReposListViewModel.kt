@@ -17,7 +17,8 @@ class ReposListViewModel(private val repository: GithubRepository) : ViewModel()
     }
 
     val repos: LiveData<List<Repository>> = Transformations.switchMap(repoResult) { it -> it.data }
-    val networkErrors: LiveData<String> = Transformations.switchMap(repoResult) { it -> it.networkErrors }
+    val networkErrors: LiveData<String> = Transformations.switchMap(repoResult) { it -> it.networkErrors
+    }
 
     /**
      * Search a repository based on a query string.

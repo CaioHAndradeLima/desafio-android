@@ -28,7 +28,7 @@ class GithubLocalCache(
      */
     fun insertPull(pulls: List<PullRequest>, insertFinished: () -> Unit ){
         ioExecutor.execute {
-            Log.d("GithubLocalCache", "inserting ${pulls.size} pulls")
+            Log.d("GithubLocalCache PullRequest", "inserting ${pulls.size} pulls")
             repoDao.insertPulls(pulls)
             insertFinished()
         }
@@ -45,4 +45,5 @@ class GithubLocalCache(
         val query = "%${name.replace(' ', '%')}%"
         return repoDao.reposByName(query)
     }
+
 }

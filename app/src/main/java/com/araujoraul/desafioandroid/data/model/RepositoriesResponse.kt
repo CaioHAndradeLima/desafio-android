@@ -16,6 +16,6 @@ data class RepositoriesResult(
 )
 
 data class PullRequestsResult(
-        val data: MutableLiveData<List<PullRequest>>,
-        val networkErrors: MutableLiveData<String>
+        val data: LiveData<List<PullRequest>>,
+        val networkErrors: LiveData<String>
 )
