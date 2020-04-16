@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.araujoraul.desafioandroid.R
 import com.araujoraul.desafioandroid.data.model.PullRequest
@@ -11,12 +12,12 @@ import com.araujoraul.desafioandroid.util.loadImage
 import de.hdodenhof.circleimageview.CircleImageView
 
 
-class PullRequestAdapter() : RecyclerView.Adapter<PullRequestAdapter.PullRequestViewHolder>() {
+class PullRequestAdapter(val clickListener: PullClickListener) : RecyclerView.Adapter<PullRequestAdapter.PullRequestViewHolder>() {
 
     var pulls = listOf<PullRequest>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PullRequestViewHolder {
-        return PullRequestViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_pull_request, parent, false))
+        return PullRequestViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_pull_request, parent, false), clickListener)
     }
 
     override fun onBindViewHolder(holder: PullRequestViewHolder, position: Int) {
@@ -26,7 +27,7 @@ class PullRequestAdapter() : RecyclerView.Adapter<PullRequestAdapter.PullRequest
 
     override fun getItemCount(): Int = pulls.count()
 
-    class PullRequestViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class PullRequestViewHolder(itemView: View, val clickListener: PullClickListener) : RecyclerView.ViewHolder(itemView) {
         private val title: TextView = itemView.findViewById(R.id.txtTitle)
         private val body: TextView = itemView.findViewById(R.id.txtBody)
         private val _avatar: CircleImageView = itemView.findViewById(R.id.avatar)
@@ -43,6 +44,11 @@ class PullRequestAdapter() : RecyclerView.Adapter<PullRequestAdapter.PullRequest
 //                    _date.text = pull.createdAt.toString()
 //                    _username.text = pull.user.login
 //                    _avatar.loadImage(pull.user.avatarUrl)
+
+                itemView.setOnClickListener {
+                    clickListener.onClick(pull)
+                }
+
             }
 
                 if (pull != null){

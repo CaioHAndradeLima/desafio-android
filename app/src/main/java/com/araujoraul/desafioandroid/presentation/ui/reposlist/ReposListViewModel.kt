@@ -1,6 +1,5 @@
 package com.araujoraul.desafioandroid.presentation.ui.reposlist
 
-import android.widget.Toast
 import androidx.lifecycle.*
 import com.araujoraul.desafioandroid.data.api.GithubRepository
 import com.araujoraul.desafioandroid.data.model.RepositoriesResult
@@ -18,9 +17,7 @@ class ReposListViewModel(private val repository: GithubRepository) : ViewModel()
     }
 
     val repos: LiveData<List<Repository>> = Transformations.switchMap(repoResult) { it -> it.data }
-    val networkErrors: LiveData<String> = Transformations.switchMap(repoResult) { it ->
-        it.networkErrors
-    }
+    val networkErrors: LiveData<String> = Transformations.switchMap(repoResult) { it -> it.networkErrors }
 
     /**
      * Search a repository based on a query string.

@@ -3,11 +3,15 @@ package com.araujoraul.desafioandroid.presentation.ui.pullrequests
 import androidx.lifecycle.*
 import com.araujoraul.desafioandroid.data.api.GithubRepository
 import com.araujoraul.desafioandroid.data.model.Owner
+import com.araujoraul.desafioandroid.data.model.PullRequest
+import com.araujoraul.desafioandroid.data.model.PullRequestsResult
 
 class PullRequestsViewModel(private val repository: GithubRepository) : ViewModel(){
 
-    private val _owner = MutableLiveData<List<Owner>>()
+    private val _pullRequests = MutableLiveData<PullRequestsResult>()
 
+    val pullRequests: LiveData<List<PullRequest>> = Transformations.switchMap(_pullRequests){it -> it.data}
+    val networkErrors: LiveData<String> = Transformations.switchMap(_pullRequests) { it -> it.networkErrors }
 
 
     class ViewModelFactory(private val pullRequest: GithubRepository) : ViewModelProvider.Factory {

@@ -1,6 +1,7 @@
 package com.araujoraul.desafioandroid.data.model
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.google.gson.annotations.SerializedName
 
 data class RepositoriesResponse(
@@ -12,4 +13,9 @@ data class RepositoriesResponse(
 data class RepositoriesResult(
         val data: LiveData<List<Repository>>,
         val networkErrors: LiveData<String>
+)
+
+data class PullRequestsResult(
+        val data: MutableLiveData<List<PullRequest>>,
+        val networkErrors: MutableLiveData<String>
 )
