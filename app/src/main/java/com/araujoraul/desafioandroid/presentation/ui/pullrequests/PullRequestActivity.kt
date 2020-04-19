@@ -13,7 +13,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.araujoraul.desafioandroid.R
 import com.araujoraul.desafioandroid.data.model.PullRequest
-import com.araujoraul.desafioandroid.databinding.ActivityPullRequestBinding
 import com.araujoraul.desafioandroid.util.Injection
 import kotlinx.android.synthetic.main.activity_pull_request.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -28,26 +27,26 @@ class PullRequestActivity : AppCompatActivity(), PullClickListener {
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val binding: ActivityPullRequestBinding = DataBindingUtil.setContentView(this, R.layout.activity_pull_request)
-
-        binding.lifecycleOwner = this
-        binding.viewmodel = viewModel
+        setContentView(R.layout.activity_pull_request)
 
         setup()
 
     }
 
     fun setup() {
-        val repository = intent?.getStringExtra(REPOSITORY) ?: ""
+        val repository = intent.getStringExtra(REPOSITORY) ?: ""
 
         setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = repository
+
+        supportActionBar?.let {
+            it.setDisplayShowHomeEnabled(true)
+            it.setDisplayHomeAsUpEnabled(true)
+            it.title = repository
+        }
 
         recyclerPull.layoutManager = LinearLayoutManager(this)
         recyclerPull.adapter = adapter
+
 
         viewModel.pullRequests.observe(this, Observer {
             Log.d("ActivityPull", "list: ${it?.size}")

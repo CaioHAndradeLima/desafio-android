@@ -1,146 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?android:selectableItemBackground">
 
-    <data>
-        <variable
-            name="viewmodel"
-            type="com.araujoraul.desafioandroid.presentation.ui.reposlist.ReposListViewModel" />
-    </data>
-
-
-    <androidx.cardview.widget.CardView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:foreground="?android:selectableItemBackground"
-        >
+        android:layout_height="match_parent"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingStart="16dp"
-            android:paddingTop="16dp"
-            android:paddingEnd="16dp"
-            >
+        <TextView
+            android:id="@+id/txtName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@android:style/TextAppearance.Large"
+            android:textColor="#3977b5"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/avatar"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/name_repo" />
 
-            <TextView
-                android:id="@+id/txtName"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textAppearance="@android:style/TextAppearance.Large"
-                android:textColor="#3977b5"
-                android:textStyle="bold"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:layout_marginEnd="8dp"
-                app:layout_constraintEnd_toStartOf="@+id/avatar"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="@string/name_repo" />
+        <TextView
+            android:id="@+id/txtDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="72dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textAlignment="viewStart"
+            android:textAppearance="@android:style/TextAppearance.Medium"
+            android:textColor="@android:color/black"
+            app:layout_constraintEnd_toStartOf="@+id/avatar"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/txtName"
+            app:layout_constraintTop_toBottomOf="@id/txtName"
+            tools:text="@string/desc_repo" />
 
-            <TextView
-                android:id="@+id/txtDescription"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="72dp"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:textAlignment="viewStart"
-                android:textAppearance="@android:style/TextAppearance.Medium"
-                android:textColor="@android:color/black"
-                app:layout_constraintEnd_toStartOf="@+id/avatar"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@id/txtName"
-                app:layout_constraintTop_toBottomOf="@id/txtName"
-                tools:text="@string/desc_repo" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/avatar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_account_circle_black_24dp"
+            app:layout_constraintBottom_toTopOf="@id/username"
+            app:layout_constraintEnd_toStartOf="@id/username"
+            app:layout_constraintStart_toEndOf="@id/username"
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/avatar"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@drawable/ic_account_circle_black_24dp"
-                android:scaleType="centerCrop"
-                app:layout_constraintStart_toEndOf="@id/username"
-                app:layout_constraintEnd_toStartOf="@id/username"
-                app:layout_constraintBottom_toTopOf="@id/username"
+            />
 
-                />
-
-            <TextView
-                android:id="@+id/username"
-                style="@style/username"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:maxWidth="100dp"
-                android:maxLines="1"
-                android:text="@string/username"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.6"
-                app:layout_constraintEnd_toEndOf="parent"
-                />
+        <TextView
+            android:id="@+id/username"
+            style="@style/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:maxWidth="100dp"
+            android:maxLines="1"
+            android:text="@string/username"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.6" />
 
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/icon_forks"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginTop="24dp"
-                android:src="@mipmap/ic_launcher"
-                app:layout_constraintStart_toStartOf="@id/txtName"
-                app:layout_constraintTop_toBottomOf="@id/txtDescription" />
+        <ImageView
+            android:id="@+id/icon_forks"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="24dp"
+            android:src="@drawable/ic_forks"
+            app:layout_constraintStart_toStartOf="@id/txtName"
+            app:layout_constraintTop_toBottomOf="@id/txtDescription" />
 
-            <TextView
-                android:id="@+id/forks"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:textAppearance="@android:style/TextAppearance.Large"
-                android:textColor="#df9407"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@id/icon_forks"
-                app:layout_constraintStart_toEndOf="@id/icon_forks"
-                app:layout_constraintTop_toTopOf="@id/icon_forks"
-                tools:text="526" />
+        <TextView
+            android:id="@+id/forks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:textAppearance="@android:style/TextAppearance.Large"
+            android:textColor="#df9407"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/icon_forks"
+            app:layout_constraintStart_toEndOf="@id/icon_forks"
+            app:layout_constraintTop_toTopOf="@id/icon_forks"
+            tools:text="526" />
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/icon_star"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="32dp"
-                android:src="@mipmap/ic_launcher"
-                app:layout_constraintBottom_toBottomOf="@id/icon_forks"
-                app:layout_constraintStart_toEndOf="@id/forks"
-                app:layout_constraintTop_toTopOf="@id/icon_forks" />
+        <ImageView
+            android:id="@+id/icon_star"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="32dp"
+            android:src="@drawable/ic_stars"
+            app:layout_constraintBottom_toBottomOf="@id/icon_forks"
+            app:layout_constraintStart_toEndOf="@id/forks"
+            app:layout_constraintTop_toTopOf="@id/icon_forks" />
 
-            <TextView
-                android:id="@+id/stars"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:textAppearance="@android:style/TextAppearance.Large"
-                android:textColor="#df9407"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@id/icon_star"
-                app:layout_constraintStart_toEndOf="@id/icon_star"
-                app:layout_constraintTop_toTopOf="@id/icon_star"
-                tools:text="66" />
+        <TextView
+            android:id="@+id/stars"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:textAppearance="@android:style/TextAppearance.Large"
+            android:textColor="#df9407"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/icon_star"
+            app:layout_constraintStart_toEndOf="@id/icon_star"
+            app:layout_constraintTop_toTopOf="@id/icon_star"
+            tools:text="66" />
 
-            <View
-                android:id="@+id/divide"
-                android:layout_width="0dp"
-                android:layout_height="0.5dp"
-                android:layout_marginTop="24dp"
-                android:background="@android:color/darker_gray"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/txtName"
-                app:layout_constraintTop_toBottomOf="@id/icon_forks" />
+        <View
+            android:id="@+id/divide"
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="24dp"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/txtName"
+            app:layout_constraintTop_toBottomOf="@id/icon_forks" />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-</layout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
