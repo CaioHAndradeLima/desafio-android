@@ -3,30 +3,34 @@ package com.araujoraul.desafioandroid.presentation.ui.pullrequests
 import androidx.lifecycle.*
 import com.araujoraul.desafioandroid.data.api.GithubRepository
 import com.araujoraul.desafioandroid.data.model.PullRequest
-import com.araujoraul.desafioandroid.data.model.PullRequestsResult
+import java.util.concurrent.Executors
 
-class PullRequestsViewModel(private val repository: GithubRepository) : ViewModel(){
+class PullRequestsViewModel(
+        private val repository: GithubRepository,
+        private val owner: String,
+        private val repo: String
+) : ViewModel() {
 
-    private val _pullRequests = MutableLiveData<PullRequestsResult>()
+    private val _pullRequests = MutableLiveData<Unit>()
 
-    val pullRequests: LiveData<List<PullRequest>> = Transformations.switchMap(_pullRequests){it -> it.data}
-    val networkErrors: LiveData<String> = Transformations.switchMap(_pullRequests) { it -> it.networkErrors }
-
-    fun request() {
-        repository.requestPullsAndSaveData()
+    private val pullResult: LiveData<List<PullRequest>> = Transformations.map(_pullRequests) {
+        PullRequestRepository(repository).request(owner, repo)
     }
 
-    class ViewModelFactory(private val pullRequest: GithubRepository) : ViewModelProvider.Factory {
+    val pullRequests: LiveData<List<PullRequest>> = pullResult
+
+    fun request() {
+        _pullRequests.postValue(Unit)
+    }
+
+    class ViewModelFactory(private val pullRequest: GithubRepository,private val owner: String,private val repo: String) : ViewModelProvider.Factory {
 
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(PullRequestsViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return PullRequestsViewModel(pullRequest) as T
+                return PullRequestsViewModel(pullRequest, owner, repo) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
-
-
-            TODO("Class ViewModel not implemented yet!!!!")
         }
     }
 

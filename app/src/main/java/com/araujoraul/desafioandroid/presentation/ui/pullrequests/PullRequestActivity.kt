@@ -2,17 +2,16 @@ package com.araujoraul.desafioandroid.presentation.ui.pullrequests
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
-import androidx.databinding.DataBindingUtil
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.araujoraul.desafioandroid.R
 import com.araujoraul.desafioandroid.data.model.PullRequest
+import com.araujoraul.desafioandroid.data.model.Repository
 import com.araujoraul.desafioandroid.util.Injection
 import kotlinx.android.synthetic.main.activity_pull_request.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -20,28 +19,37 @@ import kotlinx.android.synthetic.main.toolbar.*
 class PullRequestActivity : AppCompatActivity(), PullClickListener {
 
     private val adapter = PullRequestAdapter(this)
+    private val repository by lazy {
+        intent.getParcelableExtra<Repository>(REPOSITORY)
+                ?: throw IllegalStateException("please create Intent calling PullRequestActivity.createIntent")
+    }
+
     private val viewModel by lazy {
-        ViewModelProviders.of(this, Injection.providePullsViewModelFactory(this))
+        val repository = intent.getParcelableExtra<Repository>(REPOSITORY)
+                ?: throw IllegalStateException("please create Intent calling PullRequestActivity.createIntent")
+
+        ViewModelProviders.of(this, Injection.providePullsViewModelFactory(this,
+                repository.owner.username,
+                repository.name!!
+        ))
                 .get(PullRequestsViewModel::class.java)
     }
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pull_request)
 
         setup()
-
     }
 
-    fun setup() {
-        val repository = intent.getStringExtra(REPOSITORY) ?: ""
+    private fun setup() {
 
         setSupportActionBar(toolbar)
 
         supportActionBar?.let {
             it.setDisplayShowHomeEnabled(true)
             it.setDisplayHomeAsUpEnabled(true)
-            it.title = repository
+            it.title = repository.name
         }
 
         recyclerPull.layoutManager = LinearLayoutManager(this)
@@ -49,20 +57,12 @@ class PullRequestActivity : AppCompatActivity(), PullClickListener {
 
 
         viewModel.pullRequests.observe(this, Observer {
-            Log.d("ActivityPull", "list: ${it?.size}")
             showEmptyList(it?.size == 0)
             adapter.pulls.addAll(it)
-           adapter.notifyDataSetChanged()
+            adapter.notifyDataSetChanged()
         })
 
-        viewModel.networkErrors.observe(this, Observer<String> {
-            Toast.makeText(this, "\uD83D\uDE28 No connection! $it", Toast.LENGTH_LONG).show()
-        })
-
-
-//        TODO("Don't forget to called this name of repository in Title Toolbar")
-
-
+        viewModel.request()
     }
 
     private fun showEmptyList(show: Boolean) {
@@ -76,24 +76,22 @@ class PullRequestActivity : AppCompatActivity(), PullClickListener {
     }
 
 
-    companion object{
+    companion object {
         const val REPOSITORY = "REPOSITORY"
 
-        fun createIntent(context: Context, repository: String) =
+        fun createIntent(context: Context, repository: Repository) =
                 Intent(context, PullRequestActivity::class.java).apply {
                     putExtra(REPOSITORY, repository)
                 }
     }
 
     override fun onClick(pull: PullRequest) {
-        Toast.makeText(applicationContext, "ALL RIGHT!", Toast.LENGTH_LONG).show()
-//        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(pull.htmlUrl)))
-        TODO("Not yet implemented")
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(pull.htmlUrl)))
     }
 
 
 }
 
-interface PullClickListener{
+interface PullClickListener {
     fun onClick(pull: PullRequest)
 }

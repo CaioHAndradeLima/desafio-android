@@ -40,10 +40,11 @@ class GithubLocalCache(
      * any characters between the words.
      * @param name repository name
      */
-    fun reposByName(name: String): LiveData<List<Repository>> {
+    fun reposByName(): LiveData<List<Repository>> {
         // appending '%' so we can allow other characters to be before and after the query string
-        val query = "%${name.replace(' ', '%')}%"
-        return repoDao.reposByName(query)
+        return repoDao.searchAllRepositories()
     }
+
+    fun searchPull() =repoDao.searchAllPull()
 
 }

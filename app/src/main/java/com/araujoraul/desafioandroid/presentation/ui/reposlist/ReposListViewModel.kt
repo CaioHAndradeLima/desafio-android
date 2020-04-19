@@ -7,13 +7,9 @@ import com.araujoraul.desafioandroid.data.model.Repository
 
 class ReposListViewModel(private val repository: GithubRepository) : ViewModel() {
 
-    companion object {
-        private const val VISIBLE_THRESHOLD = 5
-    }
-
-    private val queryLiveData = MutableLiveData<String>()
+    private val queryLiveData = MutableLiveData<Unit>()
     private val repoResult: LiveData<RepositoriesResult> = Transformations.map(queryLiveData) {
-        repository.searchRepos(it)
+        repository.searchRepos()
     }
 
     val repos: LiveData<List<Repository>> = Transformations.switchMap(repoResult) { it -> it.data }
@@ -23,24 +19,9 @@ class ReposListViewModel(private val repository: GithubRepository) : ViewModel()
     /**
      * Search a repository based on a query string.
      */
-    fun searchRepo(queryString: String) {
-        queryLiveData.postValue(queryString)
+    fun searchRepo() {
+        queryLiveData.postValue(Unit)
     }
-
-    fun listScrolled(visibleItemCount: Int, lastVisibleItemPosition: Int, totalItemCount: Int) {
-        if (visibleItemCount + lastVisibleItemPosition + VISIBLE_THRESHOLD >= totalItemCount) {
-            val immutableQuery = lastQueryValue()
-            if (immutableQuery != null) {
-                repository.requestMore(immutableQuery)
-            }
-        }
-    }
-
-    /**
-     * Get the last query value.
-     */
-    fun lastQueryValue(): String? = queryLiveData.value
-
 
     /**
      * Factory for ViewModels

@@ -4,15 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.araujoraul.desafioandroid.R
 import com.araujoraul.desafioandroid.data.model.PullRequest
-import com.araujoraul.desafioandroid.util.loadImage
 import de.hdodenhof.circleimageview.CircleImageView
 
 
-class PullRequestAdapter(val clickListener: PullClickListener) : RecyclerView.Adapter<PullRequestAdapter.PullRequestViewHolder>() {
+class PullRequestAdapter(private val clickListener: PullClickListener) : RecyclerView.Adapter<PullRequestAdapter.PullRequestViewHolder>() {
 
     var pulls = ArrayList<PullRequest>()
 
@@ -27,7 +25,7 @@ class PullRequestAdapter(val clickListener: PullClickListener) : RecyclerView.Ad
 
     override fun getItemCount(): Int = pulls.count()
 
-    class PullRequestViewHolder(itemView: View, val clickListener: PullClickListener) : RecyclerView.ViewHolder(itemView) {
+    class PullRequestViewHolder(itemView: View, private val clickListener: PullClickListener) : RecyclerView.ViewHolder(itemView) {
         private val title: TextView = itemView.findViewById(R.id.txtTitle)
         private val body: TextView = itemView.findViewById(R.id.txtBody)
         private val _avatar: CircleImageView = itemView.findViewById(R.id.avatar)
@@ -39,8 +37,8 @@ class PullRequestAdapter(val clickListener: PullClickListener) : RecyclerView.Ad
 
             pull?.let {
 
-                    title.text = pull.title
-                    body.text = pull.body
+                title.text = pull.title
+                body.text = pull.body
 //                    _date.text = pull.createdAt.toString()
 //                    _username.text = pull.user.login
 //                    _avatar.loadImage(pull.user.avatarUrl)
@@ -51,9 +49,9 @@ class PullRequestAdapter(val clickListener: PullClickListener) : RecyclerView.Ad
 
             }
 
-                if (pull != null){
-                    showPullData(pull)
-                }
+            if (pull != null) {
+                showPullData(pull)
+            }
 
 
         }

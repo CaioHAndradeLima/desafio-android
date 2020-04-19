@@ -18,9 +18,11 @@ interface RepoDao{
     fun insertPulls(posts: List<PullRequest>)
 
     //for a specific search result
-    @Query("SELECT * FROM Repositories WHERE (name LIKE :queryString) OR (description LIKE " +
-            ":queryString) ORDER BY stars DESC, name ASC")
-    fun reposByName(queryString: String): LiveData<List<Repository>>
+    @Query("SELECT * FROM Repositories")
+    fun searchAllRepositories(): LiveData<List<Repository>>
+
+    @Query("SELECT * FROM PullRequests")
+    fun searchAllPull() : List<PullRequest>
 
 
 }

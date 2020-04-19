@@ -12,13 +12,11 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 private const val TAG = "GithubService"
-private const val IN_QUALIFIER = "in:name,description"
 
 interface RepositoriesService {
 
     @GET("search/repositories?q=language:java&sort=stars")
     fun searchJavaPopRepositories(
-            @Query("q") query: String,
             @Query("page") page: Int,
             @Query("per_page") itemsPerPage: Int
     ): Call<RepositoriesResponse>
@@ -33,17 +31,14 @@ interface RepositoriesService {
 
 fun searchJavaPopRepositories(
         service: RepositoriesService,
-        query: String,
         page: Int,
         itemsPerPage: Int,
         onSuccess: (repos: List<Repository>) -> Unit,
         onError: (error: String) -> Unit
 ) {
-    Log.d(TAG, "query: $query, page: $page, itemsPerPage: $itemsPerPage")
+    Log.d(TAG, "query: no, page: $page, itemsPerPage: $itemsPerPage")
 
-    val apiQuery = query + IN_QUALIFIER
-
-    service.searchJavaPopRepositories(apiQuery, page, itemsPerPage).enqueue(
+    service.searchJavaPopRepositories(page, itemsPerPage).enqueue(
             object : Callback<RepositoriesResponse>{
 
                 override fun onResponse(call: Call<RepositoriesResponse>, response: Response<RepositoriesResponse>) {
@@ -92,9 +87,6 @@ fun searchPullRequests(
                     } else{
                         onError(response.errorBody()?.string() ?: "Unknown error")
                     }
-
-
-                    TODO("Verify if it's ok")
                 }
 
                 override fun onFailure(call: Call<List<PullRequest>>, t: Throwable) {

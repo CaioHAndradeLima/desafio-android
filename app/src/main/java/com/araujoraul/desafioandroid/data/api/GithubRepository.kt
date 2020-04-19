@@ -1,8 +1,7 @@
 package com.araujoraul.desafioandroid.data.api
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.araujoraul.desafioandroid.data.model.PullRequestsResult
+import com.araujoraul.desafioandroid.data.model.PullRequest
 import com.araujoraul.desafioandroid.data.model.RepositoriesResult
 import com.araujoraul.desafioandroid.db.GithubLocalCache
 
@@ -15,26 +14,25 @@ class GithubRepository (private val service: RepositoriesService, private val ca
     /**
      * Search repositories whose names match the query.
      */
-    fun searchRepos(query: String): RepositoriesResult {
-        Log.d("GithubRepository", "New query: $query")
+    fun searchRepos(): RepositoriesResult {
         lastRequestedPage = 1
-        requestReposAndSaveData(query)
+        requestReposAndSaveData()
 
         // Get data from the local cache
-        val data = cache.reposByName(query)
+        val data = cache.reposByName()
 
         return RepositoriesResult(data, networkErrors)
     }
 
-    fun requestMore(query: String) {
-        requestReposAndSaveData(query)
+    fun requestMore() {
+        requestReposAndSaveData()
     }
 
-    private fun requestReposAndSaveData(query: String) {
+    private fun requestReposAndSaveData() {
         if (isRequestInProgress) return
 
         isRequestInProgress = true
-        searchJavaPopRepositories(service, query, lastRequestedPage, NETWORK_PAGE_SIZE, { repos ->
+        searchJavaPopRepositories(service, lastRequestedPage, NETWORK_PAGE_SIZE, { repos ->
             cache.insert(repos) {
                 lastRequestedPage++
                 isRequestInProgress = false
@@ -47,16 +45,15 @@ class GithubRepository (private val service: RepositoriesService, private val ca
 
 
      fun requestPullsAndSaveData(owner: String, repo: String){
-            TODO("??????????")
         searchPullRequests(service, owner, repo, { pulls ->
             cache.insertPull(pulls){}
         }, { error ->
             networkErrors.postValue(error)
         })
-
     }
 
 
+    fun searchPulls() = cache.searchPull()
 
     companion object {
         private const val NETWORK_PAGE_SIZE = 50

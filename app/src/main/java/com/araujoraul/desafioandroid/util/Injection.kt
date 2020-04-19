@@ -1,7 +1,6 @@
 package com.araujoraul.desafioandroid.util
 
 import android.content.Context
-import android.widget.ImageView
 import androidx.lifecycle.ViewModelProvider
 import com.araujoraul.desafioandroid.R
 import com.araujoraul.desafioandroid.data.api.ApiService
@@ -46,15 +45,9 @@ object Injection {
     }
 
 
-    fun providePullsViewModelFactory(context: Context): ViewModelProvider.Factory{
-        return PullRequestsViewModel.ViewModelFactory(provideGithubRepository(context))
+    fun providePullsViewModelFactory(context: Context, owner: String, repo: String): ViewModelProvider.Factory {
+        return PullRequestsViewModel.ViewModelFactory(provideGithubRepository(context), owner, repo)
     }
 
 }
 
-fun CircleImageView.loadImage(imageUrl: String?) {
-    Glide.with(this.context)
-            .load(imageUrl)
-            .placeholder(R.drawable.ic_account_circle_black_24dp)
-            .into(this)
-}

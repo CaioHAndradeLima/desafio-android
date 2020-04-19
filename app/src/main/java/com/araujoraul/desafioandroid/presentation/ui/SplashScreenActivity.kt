@@ -14,10 +14,8 @@ class SplashScreenActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash_screen)
 
         Handler().postDelayed(Runnable {
-            run {
                 startActivity(Intent(this, ReposListActivity::class.java))
                 finish()
-            }
         }, 4000)
 
     }
