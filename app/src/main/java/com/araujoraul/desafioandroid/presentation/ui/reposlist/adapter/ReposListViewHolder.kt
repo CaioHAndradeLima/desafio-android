@@ -56,7 +56,8 @@ class ReposListViewHolder(itemView: View, private val clickListener: RepoClickLi
 
         stars.text = repo.stars.toString()
         forks.text = repo.forks.toString()
-
+        _username.text = repo.owner.username
+        _avatar.loadImage(repo.owner.avatarUrl)
     }
 
 }

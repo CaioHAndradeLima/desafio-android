@@ -8,9 +8,12 @@ import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.araujoraul.desafioandroid.R
 import com.araujoraul.desafioandroid.data.model.Repository
 import com.araujoraul.desafioandroid.presentation.ui.pullrequests.PullRequestActivity
+import com.araujoraul.desafioandroid.presentation.ui.reposlist.adapter.ReposListAdapter
 import com.araujoraul.desafioandroid.util.Injection
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -18,13 +21,12 @@ import kotlinx.android.synthetic.main.activity_main.*
 class ReposListActivity : AppCompatActivity(), RepoClickListener {
 
     private val adapter = ReposListAdapter(this)
-
+    private val toolbar by lazy { findViewById<Toolbar>(R.id.toolbar) }
+    private val recyclerView by lazy { findViewById<RecyclerView>(R.id.recyclerMain) }
     private val viewModel by lazy {
         ViewModelProviders.of(this, Injection.provideReposViewModelFactory(this))
                 .get(ReposListViewModel::class.java)
     }
-
-    private val toolbar by lazy { findViewById<Toolbar>(R.id.toolbar) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +40,12 @@ class ReposListActivity : AppCompatActivity(), RepoClickListener {
         setSupportActionBar(toolbar)
         supportActionBar?.title = getString(R.string.app_name)
 
-        recyclerMain.adapter = adapter
+        recyclerView.let {
+            it.layoutManager = LinearLayoutManager(this)
+            it.hasFixedSize()
+            it.adapter = adapter
+        }
+
         viewModel.repos.observe(this, Observer {
             Log.d("Activity", "list: ${it?.size}")
             showEmptyList(it?.size == 0)
@@ -53,10 +60,10 @@ class ReposListActivity : AppCompatActivity(), RepoClickListener {
     private fun showEmptyList(show: Boolean) {
         if (show) {
             emptyList.visibility = View.VISIBLE
-            recyclerMain.visibility = View.GONE
+            recyclerView.visibility = View.GONE
         } else {
             emptyList.visibility = View.GONE
-            recyclerMain.visibility = View.VISIBLE
+            recyclerView.visibility = View.VISIBLE
         }
     }
 

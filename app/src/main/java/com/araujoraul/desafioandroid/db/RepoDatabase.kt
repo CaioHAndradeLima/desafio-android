@@ -9,7 +9,7 @@ import com.araujoraul.desafioandroid.data.model.Repository
 
 @Database(
         entities = [Repository::class, PullRequest::class],
-        version = 1,
+        version = 4,
         exportSchema = false
 )
 abstract class RepoDatabase : RoomDatabase(){

@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.araujoraul.desafioandroid.R
 import com.araujoraul.desafioandroid.data.model.PullRequest
+import com.araujoraul.desafioandroid.extension.loadImage
 import de.hdodenhof.circleimageview.CircleImageView
 
 
@@ -39,9 +40,9 @@ class PullRequestAdapter(private val clickListener: PullClickListener) : Recycle
 
                 title.text = pull.title
                 body.text = pull.body
-//                    _date.text = pull.createdAt.toString()
-//                    _username.text = pull.user.login
-//                    _avatar.loadImage(pull.user.avatarUrl)
+                    _date.text = pull.createdAt?.time.toString()
+                    _username.text = pull.user.login
+                    _avatar.loadImage(pull.user.avatarUrl)
 
                 itemView.setOnClickListener {
                     clickListener.onClick(pull)
@@ -69,10 +70,9 @@ class PullRequestAdapter(private val clickListener: PullClickListener) : Recycle
                 bodyVisibility = View.VISIBLE
             }
             body.visibility = bodyVisibility
-
-//            _date.text = pull.createdAt.toString()
-//            _username.text = pull.user.login
-//            _avatar.loadImage(pull.user.avatarUrl)
+            _date.text = pull.createdAt.toString()
+            _username.text = pull.user.login
+            _avatar.loadImage(pull.user.avatarUrl)
         }
 
     }

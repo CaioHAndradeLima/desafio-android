@@ -1,20 +1,12 @@
-package com.araujoraul.desafioandroid.presentation.ui.reposlist
+package com.araujoraul.desafioandroid.presentation.ui.reposlist.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.araujoraul.desafioandroid.R
 import com.araujoraul.desafioandroid.data.model.Repository
-import com.araujoraul.desafioandroid.presentation.ui.reposlist.adapter.ReposListViewHolder
-import com.bumptech.glide.Glide
-import de.hdodenhof.circleimageview.CircleImageView
-import kotlinx.android.synthetic.main.item_repos_list.view.*
+import com.araujoraul.desafioandroid.presentation.ui.reposlist.RepoClickListener
 
 class ReposListAdapter(val clickListener: RepoClickListener): ListAdapter<Repository, ReposListViewHolder>(REPO_COMPARATOR) {
 

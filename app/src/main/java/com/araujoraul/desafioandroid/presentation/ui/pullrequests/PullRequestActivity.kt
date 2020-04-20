@@ -6,9 +6,11 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.araujoraul.desafioandroid.R
 import com.araujoraul.desafioandroid.data.model.PullRequest
 import com.araujoraul.desafioandroid.data.model.Repository
@@ -19,6 +21,8 @@ import kotlinx.android.synthetic.main.toolbar.*
 class PullRequestActivity : AppCompatActivity(), PullClickListener {
 
     private val adapter = PullRequestAdapter(this)
+    private val toolbar by lazy { findViewById<Toolbar>(R.id.toolbar) }
+    private val recyclerView by lazy { findViewById<RecyclerView>(R.id.recyclerPull) }
     private val repository by lazy {
         intent.getParcelableExtra<Repository>(REPOSITORY)
                 ?: throw IllegalStateException("please create Intent calling PullRequestActivity.createIntent")
@@ -45,16 +49,17 @@ class PullRequestActivity : AppCompatActivity(), PullClickListener {
     private fun setup() {
 
         setSupportActionBar(toolbar)
-
         supportActionBar?.let {
             it.setDisplayShowHomeEnabled(true)
             it.setDisplayHomeAsUpEnabled(true)
             it.title = repository.name
         }
 
-        recyclerPull.layoutManager = LinearLayoutManager(this)
-        recyclerPull.adapter = adapter
-
+        recyclerView.let {
+            it.layoutManager = LinearLayoutManager(this)
+            it.hasFixedSize()
+            it.adapter = adapter
+        }
 
         viewModel.pullRequests.observe(this, Observer {
             showEmptyList(it?.size == 0)
@@ -68,10 +73,10 @@ class PullRequestActivity : AppCompatActivity(), PullClickListener {
     private fun showEmptyList(show: Boolean) {
         if (show) {
             emptyListPull.visibility = View.VISIBLE
-            recyclerPull.visibility = View.GONE
+            recyclerView.visibility = View.GONE
         } else {
             emptyListPull.visibility = View.GONE
-            recyclerPull.visibility = View.VISIBLE
+            recyclerView.visibility = View.VISIBLE
         }
     }
 
