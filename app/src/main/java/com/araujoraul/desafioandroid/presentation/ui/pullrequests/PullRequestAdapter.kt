@@ -4,11 +4,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.araujoraul.desafioandroid.R
 import com.araujoraul.desafioandroid.data.model.PullRequest
+import com.araujoraul.desafioandroid.extension.applyFormat
 import com.araujoraul.desafioandroid.extension.loadImage
 import de.hdodenhof.circleimageview.CircleImageView
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class PullRequestAdapter(private val clickListener: PullClickListener) : RecyclerView.Adapter<PullRequestAdapter.PullRequestViewHolder>() {
@@ -27,11 +34,11 @@ class PullRequestAdapter(private val clickListener: PullClickListener) : Recycle
     override fun getItemCount(): Int = pulls.count()
 
     class PullRequestViewHolder(itemView: View, private val clickListener: PullClickListener) : RecyclerView.ViewHolder(itemView) {
-        private val title: TextView = itemView.findViewById(R.id.txtTitle)
-        private val body: TextView = itemView.findViewById(R.id.txtBody)
-        private val _avatar: CircleImageView = itemView.findViewById(R.id.avatar)
-        private val _username: TextView = itemView.findViewById(R.id.username)
-        private val _date: TextView = itemView.findViewById(R.id.date)
+        private val title = itemView.findViewById<TextView>(R.id.txtTitle)
+        private val body = itemView.findViewById<TextView>(R.id.txtBody)
+        private val avatar = itemView.findViewById<CircleImageView>(R.id.avatar)
+        private val username = itemView.findViewById<TextView>(R.id.username)
+        private val date = itemView.findViewById<AppCompatTextView>(R.id.date)
         private var pull: PullRequest? = null
 
         fun bind(pull: PullRequest?) {
@@ -40,9 +47,9 @@ class PullRequestAdapter(private val clickListener: PullClickListener) : Recycle
 
                 title.text = pull.title
                 body.text = pull.body
-                    _date.text = pull.createdAt?.time.toString()
-                    _username.text = pull.user.login
-                    _avatar.loadImage(pull.user.avatarUrl)
+                date.text = pull.createdAt?.applyFormat()
+                username.text = pull.user.login
+                avatar.loadImage(pull.user.avatarUrl)
 
                 itemView.setOnClickListener {
                     clickListener.onClick(pull)
@@ -53,7 +60,6 @@ class PullRequestAdapter(private val clickListener: PullClickListener) : Recycle
             if (pull != null) {
                 showPullData(pull)
             }
-
 
         }
 
@@ -70,9 +76,9 @@ class PullRequestAdapter(private val clickListener: PullClickListener) : Recycle
                 bodyVisibility = View.VISIBLE
             }
             body.visibility = bodyVisibility
-            _date.text = pull.createdAt.toString()
-            _username.text = pull.user.login
-            _avatar.loadImage(pull.user.avatarUrl)
+            date.text = pull.createdAt?.applyFormat()
+            username.text = pull.user.login
+            avatar.loadImage(pull.user.avatarUrl)
         }
 
     }

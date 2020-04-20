@@ -1,7 +1,6 @@
 package com.araujoraul.desafioandroid.data.model
 
 import android.os.Parcelable
-import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -19,12 +18,12 @@ data class PullRequest(
         @field:SerializedName("title") val title: String?,
         @field:SerializedName("url") val url: String,
 
-
         @field:SerializedName("created_at")
         @Embedded
-        val createdAt: Date?,
+        val createdAt: Date? = Date(),
 
         @SerializedName("user")
         @Embedded
         val user: User
 ) : Parcelable
+
