@@ -20,7 +20,7 @@ data class PullRequest(
 
         @field:SerializedName("created_at")
         @Embedded
-        val createdAt: Date? = Date(),
+        val createdAt: Date?,
 
         @SerializedName("user")
         @Embedded

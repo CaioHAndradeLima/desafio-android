@@ -52,7 +52,7 @@ class PullRequestActivity : AppCompatActivity(), PullClickListener {
         supportActionBar?.let {
             it.setDisplayShowHomeEnabled(true)
             it.setDisplayHomeAsUpEnabled(true)
-            it.title = repository.name
+            it.title = repository.name?.toUpperCase()
         }
 
         recyclerView.let {

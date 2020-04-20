@@ -1,5 +1,6 @@
 package com.araujoraul.desafioandroid.presentation.ui.pullrequests
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,7 +39,7 @@ class PullRequestAdapter(private val clickListener: PullClickListener) : Recycle
         private val body = itemView.findViewById<TextView>(R.id.txtBody)
         private val avatar = itemView.findViewById<CircleImageView>(R.id.avatar)
         private val username = itemView.findViewById<TextView>(R.id.username)
-        private val date = itemView.findViewById<AppCompatTextView>(R.id.date)
+        private val date = itemView.findViewById<TextView>(R.id.date)
         private var pull: PullRequest? = null
 
         fun bind(pull: PullRequest?) {
@@ -47,7 +48,15 @@ class PullRequestAdapter(private val clickListener: PullClickListener) : Recycle
 
                 title.text = pull.title
                 body.text = pull.body
-                date.text = pull.createdAt?.applyFormat()
+
+            try {
+                val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
+                val formattedDate: String = dateFormat.format(pull.createdAt.toString())
+                date.text = formattedDate
+            } catch (e: Exception){
+                Log.d("PullAdapter", "createdAt: "+e.message)
+            }
+
                 username.text = pull.user.login
                 avatar.loadImage(pull.user.avatarUrl)
 
@@ -76,7 +85,7 @@ class PullRequestAdapter(private val clickListener: PullClickListener) : Recycle
                 bodyVisibility = View.VISIBLE
             }
             body.visibility = bodyVisibility
-            date.text = pull.createdAt?.applyFormat()
+
             username.text = pull.user.login
             avatar.loadImage(pull.user.avatarUrl)
         }
